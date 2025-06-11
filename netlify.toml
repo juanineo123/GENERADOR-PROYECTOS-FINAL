@@ -1,0 +1,17 @@
+# Archivo de configuración para Netlify
+
+[build]
+  # Directorio donde se encuentra tu index.html
+  publish = "/"
+  # Directorio donde crearemos las funciones del servidor
+  functions = "netlify/functions"
+
+# Reglas para redirigir las llamadas de la API a nuestras funciones
+# Esta es la sintaxis correcta y recomendada
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[functions]
+  node_bundler = "esbuild"

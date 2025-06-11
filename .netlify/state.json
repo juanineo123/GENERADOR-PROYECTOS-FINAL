@@ -1,0 +1,19 @@
+{
+	"geolocation": {
+		"data": {
+			"city": "Tarapoto",
+			"country": {
+				"code": "PE",
+				"name": "Peru"
+			},
+			"subdivision": {
+				"code": "SAM",
+				"name": "San Martín Department"
+			},
+			"timezone": "America/Lima",
+			"latitude": -6.5045,
+			"longitude": -76.3629
+		},
+		"timestamp": 1749615306490
+	}
+}

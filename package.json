@@ -1,0 +1,14 @@
+{
+  "name": "generador-proyectos-docente",
+  "version": "1.0.0",
+  "description": "Generador de proyectos de aprendizaje con Netlify Functions y Gemini.",
+  "main": "index.html",
+  "scripts": {
+    "start": "netlify dev"
+  },
+  "author": "Juan Manuel Caicedo Oliva & Gemini",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^2.7.0"
+  }
+}

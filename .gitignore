@@ -1,0 +1,11 @@
+# Ignorar la carpeta de dependencias de Node.js
+# Esta carpeta se regenera automáticamente con "npm install"
+node_modules/
+
+# Ignorar el archivo de variables de entorno locales
+# ¡NUNCA subas tus claves secretas a un repositorio público!
+.env
+
+# Archivos de sistema operativo
+.DS_Store
+Thumbs.db
