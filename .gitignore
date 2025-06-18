@@ -1,14 +1,8 @@
-# Ignorar la carpeta de dependencias de Node.js
-# Esta carpeta se regenera automáticamente con "npm install"
-node_modules/
+# Ignorar la carpeta de dependencias de Node
+node_modules
 
-# Ignorar el archivo de variables de entorno locales
-# ¡NUNCA subas tus claves secretas a un repositorio público!
-.env
-
-# Archivos de sistema operativo
-.DS_Store
-Thumbs.db
-
-# Local Netlify folder
+# Ignorar archivos y carpetas temporales de Netlify
 .netlify
+
+# Ignorar variables de entorno
+.env
