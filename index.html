@@ -3,416 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Generador de Proyectos de Aprendizaje</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/html-docx-js/dist/html-docx.js"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .loader {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3498db;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        #projectOutput h2 { font-size: 1.5rem; font-weight: 700; margin-top: 1.5rem; margin-bottom: 0.5rem; color: #1e3a8a; }
-        #projectOutput h3 { font-size: 1.25rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #1e40af; }
-        #projectOutput p, #projectOutput li { margin-bottom: 0.5rem; line-height: 1.6; color: #334155; }
-        #projectOutput strong { color: #1e293b; }
-        #projectOutput table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        #projectOutput th, #projectOutput td { border: 1px solid #cbd5e1; padding: 12px; text-align: left; }
-        #projectOutput th { background-color: #f1f5f9; color: #020617; font-weight: 600; }
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <title>Generador de Proyectos de Aprendizaje - Wizard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-gray-100 text-gray-800">
+<body>
+    <div class="container">
+        <h1>Generador de Proyectos de Aprendizaje</h1>
+        <div class="progress-bar-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        <div class="steps-container">
+            <div class="step" id="step1">
+                <h2>Paso 1: Datos del Docente e Institución</h2>
+                <label for="teacherName">Nombre del Docente:</label>
+                <input type="text" id="teacherName" name="teacherName" value="Juan Manuel Caicedo Oliva" required>
 
-    <div class="container mx-auto p-4 md:p-8 max-w-5xl">
-        <header class="text-center mb-8">
-            <h1 class="text-3xl md:text-4xl font-bold text-blue-900">Generador de Proyectos de Aprendizaje</h1>
-            <p class="mt-2 text-lg text-gray-600">Crea proyectos innovadores basados en problemas de tu comunidad.</p>
-        </header>
+                <label for="schoolName">Nombre de la I.E.:</label>
+                <input type="text" id="schoolName" name="schoolName" value="Ángel Custodio Ramírez" required>
 
-        <div class="bg-white p-6 rounded-2xl shadow-lg">
-            <!-- Paso 1: Datos del Docente -->
-            <div class="step">
-                <h2 class="text-2xl font-bold text-blue-900 border-b-2 border-blue-200 pb-2 mb-6">Paso 1: Completa tus datos</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="teacherName" class="block text-sm font-medium text-gray-700 mb-1">Nombre del Docente</label>
-                        <input type="text" id="teacherName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Juan Manuel Caicedo Oliva">
-                    </div>
-                    <div>
-                        <label for="schoolName" class="block text-sm font-medium text-gray-700 mb-1">Institución Educativa</label>
-                        <input type="text" id="schoolName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Ángel Custodio Ramirez">
-                    </div>
-                    <div>
-                        <label for="level" class="block text-sm font-medium text-gray-700 mb-1">Nivel Educativo</label>
-                        <select id="level" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="">Seleccione un nivel</option>
-                            <option value="Inicial">Inicial</option>
-                            <option value="Primaria">Primaria</option>
-                            <option value="Secundaria">Secundaria</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="grade" class="block text-sm font-medium text-gray-700 mb-1">Grado/Edad</label>
-                        <select id="grade" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" disabled>
-                            <option value="">Primero seleccione un nivel</option>
-                        </select>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-2">Áreas Curriculares a Integrar</label>
-                        <div id="areasContainer" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                             <!-- Checkboxes se generarán aquí -->
+                <label for="location">Localidad (General):</label>
+                <input type="text" id="location" name="location" value="Tarapoto" required>
+
+                <label for="level">Nivel:</label>
+                <select id="level" name="level" required>
+                    <option value="Secundaria">Secundaria</option>
+                    <option value="Primaria">Primaria</option>
+                    <option value="Inicial">Inicial</option>
+                </select>
+
+                <label for="grade">Grado:</label>
+                <select id="grade" name="grade" required>
+                    <option value="Tercero de Secundaria">Tercero de Secundaria</option>
+                    <option value="Primero de Secundaria">Primero de Secundaria</option>
+                    <option value="Segundo de Secundaria">Segundo de Secundaria</option>
+                    <option value="Cuarto de Secundaria">Cuarto de Secundaria</option>
+                    <option value="Quinto de Secundaria">Quinto de Secundaria</option>
+                </select>
+                <button onclick="nextStep()">Siguiente</button>
+            </div>
+
+            <div class="step" id="step2" style="display:none;">
+                <h2>Paso 2: Selección de Áreas Integradas</h2>
+                <p>Selecciona las áreas que deseas integrar en el proyecto:</p>
+                <div class="areas-grid">
+                    <label><input type="checkbox" name="area" value="Matemática" checked> Matemática</label>
+                    <label><input type="checkbox" name="area" value="Comunicación"> Comunicación</label>
+                    <label><input type="checkbox" name="area" value="Ciencia y Tecnología"> Ciencia y Tecnología</label>
+                    <label><input type="checkbox" name="area" value="Ciencias Sociales"> Ciencias Sociales</label>
+                    <label><input type="checkbox" name="area" value="Desarrollo Personal, Ciudadanía y Cívica"> Desarrollo Personal, Ciudadanía y Cívica</label>
+                    <label><input type="checkbox" name="area" value="Educación para el Trabajo"> Educación para el Trabajo</label>
+                    <label><input type="checkbox" name="area" value="Educación Artística y Cultural"> Educación Artística y Cultural</label>
+                    <label><input type="checkbox" name="area" value="Educación Física"> Educación Física</label>
+                    <label><input type="checkbox" name="area" value="Religión"> Religión</label>
+                    <label><input type="checkbox" name="area" value="Inglés"> Inglés</label>
+                </div>
+                <button onclick="prevStep()">Anterior</button>
+                <button onclick="nextStep()">Siguiente</button>
+            </div>
+
+            <div class="step" id="step3" style="display:none;">
+                <h2>Paso 3: Situación Problemática</h2>
+                <p>Describe una situación o busca problemas relevantes para tu localidad.</p>
+                
+                <label for="problem">Describe la situación problemática (opcional, si no buscas):</label>
+                <textarea id="problem" name="problem" rows="4"></textarea>
+
+                <p>O bien, busca problemas basados en tu localidad:</p>
+                <label for="localidadProblem">Localidad (para buscar problemas):</label>
+                <input type="text" id="localidadProblem" name="localidadProblem" placeholder="Ej: Tarapoto" value="Tarapoto">
+                <button onclick="searchProblems()">Buscar Problemas en mi Localidad</button>
+                
+                <div id="problemsOutput" style="margin-top: 20px; padding: 15px; border: 1px dashed #ced4da; border-radius: 5px; min-height: 80px; display: none;">
+                    <p>Cargando opciones de problemas...</p>
+                    <div class="loading-spinner" style="display:none;"></div>
+                    <div id="problemsList">
                         </div>
+                    <button id="confirmProblemsBtn" onclick="nextStep()" style="margin-top: 15px; display:none;">Confirmar Problemas y Continuar</button>
+                </div>
+
+                <div class="navigation-buttons-step3" style="margin-top: 20px;">
+                    <button onclick="prevStep()">Anterior</button>
+                    <button id="continueProblemStepBtn" onclick="nextStep()" disabled>Siguiente</button>
                     </div>
-                </div>
             </div>
 
-            <!-- Paso 2: Problemas Locales -->
-            <div class="step mt-8">
-                <h2 class="text-2xl font-bold text-blue-900 border-b-2 border-blue-200 pb-2 mb-6">Paso 2: Identifica un problema local</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
-                    <div class="md:col-span-2">
-                        <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Tu Localidad (Ciudad, Región)</label>
-                        <input type="text" id="location" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Ej: Tarapoto, San Martín">
-                    </div>
-                    <button id="findProblemsBtn" class="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition-all duration-300 flex items-center justify-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" /></svg>
-                        Buscar Problemas
-                    </button>
-                </div>
-                <div id="problemsLoader" class="hidden my-4 flex justify-center items-center flex-col">
-                    <div class="loader"></div>
-                    <p class="mt-2 text-gray-600">Buscando problemas en tu localidad...</p>
-                </div>
-                <div id="problemsContainer" class="mt-6 hidden">
-                     <!-- Los problemas se mostrarán aquí -->
-                </div>
+            <div class="step" id="step4" style="display:none;">
+                <h2>Paso 4: Generando Bloque 1 (Título, Situación, Propósito)...</h2>
+                <p>Por favor, espera mientras la inteligencia artificial procesa la información inicial.</p>
+                <div class="loading-spinner"></div>
             </div>
 
-            <!-- Paso 3: Generación del Proyecto -->
-             <div class="step mt-8 text-center">
-                 <button id="generateProjectBtn" class="bg-green-600 text-white font-bold py-4 px-8 rounded-lg hover:bg-green-700 transition-all duration-300 text-lg disabled:bg-gray-400 disabled:cursor-not-allowed" disabled>
-                    Generar Proyecto de Aprendizaje
-                 </button>
-             </div>
-        </div>
+            <div class="step" id="step5" style="display:none;">
+                <h2>Paso 5: Generando Bloque 2 (Objetivos, Competencias)...</h2>
+                <p>Por favor, espera mientras la inteligencia artificial procesa la información.</p>
+                <div class="loading-spinner"></div>
+            </div>
 
-        <!-- Salida del Proyecto -->
-        <div id="projectResultContainer" class="bg-white p-6 md:p-8 rounded-2xl shadow-lg mt-8 hidden">
-            <div id="projectLoader" class="hidden my-4 flex justify-center items-center flex-col">
-                <div class="loader"></div>
-                <p class="mt-2 text-gray-600">Creando el proyecto... Esto puede tardar un momento.</p>
+            <div class="step" id="step6" style="display:none;">
+                <h2>Paso 6: Generando Bloque 3 (Actividades, Recursos)...</h2>
+                <p>Por favor, espera mientras la inteligencia artificial procesa la información.</p>
+                <div class="loading-spinner"></div>
             </div>
-            <div id="projectOutput">
-                <!-- El proyecto generado se mostrará aquí -->
+
+            <div class="step" id="step7" style="display:none;">
+                <h2>Paso 7: Generando Bloque 4 (Evaluación)...</h2>
+                <p>Por favor, espera mientras la inteligencia artificial procesa la información.</p>
+                <div class="loading-spinner"></div>
             </div>
-            <div id="downloadBtnContainer" class="text-center mt-8 hidden">
-                <button id="downloadWordBtn" class="bg-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-indigo-700 transition-all duration-300 flex items-center justify-center mx-auto">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm11.707 6.707a1 1 0 01-1.414 0L11 6.414V13a1 1 0 11-2 0V6.414L5.707 9.707a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" /></svg>
-                    Descargar en Word
-                </button>
+
+            <div class="step" id="step8" style="display:none;">
+                <h2>Paso 8: Revisión Final y Descarga</h2>
+                <div id="projectPreview">
+                    <p>Contenido final del proyecto...</p>
+                </div>
+                <div class="navigation-buttons-step8" style="margin-top: 20px;">
+                    <button onclick="prevStep()">Anterior</button>
+                    <button onclick="downloadProject()">Descargar Proyecto (Word)</button>
+                    <button onclick="startOver()">Empezar de Nuevo</button>
+                </div>
             </div>
-        </div>
-         <div id="errorMessage" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg relative mt-6" role="alert">
-            <strong class="font-bold">¡Error!</strong>
-            <span class="block sm:inline" id="errorMessageText"></span>
         </div>
     </div>
-
-    <script>
-        // --- CONFIGURACIÓN ---
-        const gradeData = {
-            'Inicial': ['3 años', '4 años', '5 años'],
-            'Primaria': ['1er Grado', '2do Grado', '3er Grado', '4to Grado', '5to Grado', '6to Grado'],
-            'Secundaria': ['1ro de Secundaria', '2do de Secundaria', '3ro de Secundaria', '4to de Secundaria', '5to de Secundaria']
-        };
-
-        const areasData = [
-            "Comunicación", "Matemática", "Personal Social", "Ciencia y Tecnología",
-            "Arte y Cultura", "Educación Física", "Inglés", "Educación para el Trabajo (EPT)",
-            "Desarrollo Personal, Ciudadanía y Cívica (DPCC)", "Ciencias Sociales"
-        ];
-        
-        // --- REFERENCIAS AL DOM ---
-        const levelSelect = document.getElementById('level');
-        const gradeSelect = document.getElementById('grade');
-        const areasContainer = document.getElementById('areasContainer');
-        const findProblemsBtn = document.getElementById('findProblemsBtn');
-        const locationInput = document.getElementById('location');
-        const problemsContainer = document.getElementById('problemsContainer');
-        const problemsLoader = document.getElementById('problemsLoader');
-        const generateProjectBtn = document.getElementById('generateProjectBtn');
-        const projectLoader = document.getElementById('projectLoader');
-        const projectResultContainer = document.getElementById('projectResultContainer');
-        const projectOutput = document.getElementById('projectOutput');
-        const downloadBtnContainer = document.getElementById('downloadBtnContainer');
-        const downloadWordBtn = document.getElementById('downloadWordBtn');
-        const errorMessage = document.getElementById('errorMessage');
-        const errorMessageText = document.getElementById('errorMessageText');
-
-        // --- INICIALIZACIÓN ---
-        function initialize() {
-            areasData.forEach(area => {
-                const div = document.createElement('div');
-                div.className = 'flex items-center';
-                const input = document.createElement('input');
-                input.type = 'checkbox';
-                input.id = `area-${area.replace(/\s+/g, '-')}`;
-                input.name = 'areas';
-                input.value = area;
-                input.className = 'h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500';
-                const label = document.createElement('label');
-                label.htmlFor = input.id;
-                label.textContent = area;
-                label.className = 'ml-2 block text-sm text-gray-900';
-                div.appendChild(input);
-                div.appendChild(label);
-                areasContainer.appendChild(div);
-            });
-
-            levelSelect.addEventListener('change', updateGradeOptions);
-            findProblemsBtn.addEventListener('click', handleFindProblems);
-            generateProjectBtn.addEventListener('click', handleGenerateProject);
-            downloadWordBtn.addEventListener('click', downloadAsWord);
-
-            document.getElementById('teacherName').value = 'Juan Manuel Caicedo Oliva';
-            document.getElementById('schoolName').value = 'Ángel Custodio Ramirez';
-            document.getElementById('location').value = 'Tarapoto, San Martín, Perú';
-        }
-
-        // --- FUNCIONES ---
-        function updateGradeOptions() {
-            const selectedLevel = levelSelect.value;
-            gradeSelect.innerHTML = '<option value="">Seleccione un grado/edad</option>';
-            if (selectedLevel && gradeData[selectedLevel]) {
-                gradeData[selectedLevel].forEach(grade => {
-                    const option = document.createElement('option');
-                    option.value = grade;
-                    option.textContent = grade;
-                    gradeSelect.appendChild(option);
-                });
-                gradeSelect.disabled = false;
-            } else {
-                gradeSelect.disabled = true;
-            }
-        }
-
-        function getSelectedAreas() {
-            return Array.from(document.querySelectorAll('input[name="areas"]:checked')).map(cb => cb.value);
-        }
-
-        function validateInputs(step) {
-            hideError();
-            if (step === 'findProblems') {
-                if (!locationInput.value.trim()) {
-                    showError("Por favor, ingresa una localidad para buscar problemas.");
-                    return false;
-                }
-            } else if (step === 'generateProject') {
-                const selectedAreas = getSelectedAreas();
-                const selectedProblem = document.querySelector('input[name="problem"]:checked');
-                if (!document.getElementById('teacherName').value || !document.getElementById('schoolName').value || !levelSelect.value || !gradeSelect.value) {
-                     showError("Completa todos los campos del Paso 1.");
-                     return false;
-                }
-                if (selectedAreas.length === 0) {
-                     showError("Selecciona al menos un área curricular.");
-                     return false;
-                }
-                if (!selectedProblem) {
-                    showError("Selecciona un problema local para continuar.");
-                    return false;
-                }
-            }
-            return true;
-        }
-        
-        function showError(message) {
-            errorMessageText.textContent = message;
-            errorMessage.classList.remove('hidden');
-        }
-
-        function hideError() {
-            errorMessage.classList.add('hidden');
-        }
-        
-        // --- LÓGICA DE NETLIFY FUNCTIONS ---
-
-        async function handleFindProblems() {
-            if (!validateInputs('findProblems')) return;
-            
-            problemsLoader.classList.remove('hidden');
-            findProblemsBtn.disabled = true;
-            problemsContainer.classList.add('hidden');
-            problemsContainer.innerHTML = '';
-            generateProjectBtn.disabled = true; 
-            
-            try {
-                // *** RUTA CORREGIDA ***
-                const response = await fetch('/api/find-problems', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ location: locationInput.value })
-                });
-
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Error en el servidor');
-                }
-
-                const data = await response.json();
-                const problems = data.problems || [];
-
-                if (problems.length > 0) {
-                    problemsContainer.innerHTML = '<h3 class="text-xl font-semibold mb-4 text-gray-800">Selecciona un problema para tu proyecto:</h3>';
-                    problems.forEach((problem, index) => {
-                        const problemId = `problem-${index}`;
-                        const div = document.createElement('div');
-                        div.className = 'p-4 border rounded-lg hover:bg-blue-50 transition-colors duration-200 cursor-pointer';
-                        const input = document.createElement('input');
-                        input.type = 'radio'; input.id = problemId; input.name = 'problem'; input.value = problem;
-                        input.className = 'mr-3 h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300';
-                        const label = document.createElement('label');
-                        label.htmlFor = problemId; label.textContent = problem;
-                        label.className = 'text-gray-700 w-full cursor-pointer';
-                        
-                        div.addEventListener('click', () => {
-                           input.checked = true;
-                           generateProjectBtn.disabled = false; 
-                           document.querySelectorAll('input[name="problem"]').forEach(radio => radio.parentElement.classList.remove('bg-blue-100', 'border-blue-500'));
-                           div.classList.add('bg-blue-100', 'border-blue-500');
-                        });
-                        
-                        div.appendChild(input);
-                        div.appendChild(label);
-                        problemsContainer.appendChild(div);
-                    });
-                    problemsContainer.classList.remove('hidden');
-                    problemsContainer.classList.add('fade-in');
-                } else {
-                    showError("No se pudieron identificar problemas específicos. Intenta con una localidad más precisa.");
-                }
-
-            } catch (error) {
-                console.error("Error al buscar problemas:", error);
-                showError(`No se pudo conectar con el servicio. ${error.message}`);
-            } finally {
-                problemsLoader.classList.add('hidden');
-                findProblemsBtn.disabled = false;
-            }
-        }
-
-        async function handleGenerateProject() {
-            if (!validateInputs('generateProject')) return;
-            
-            projectLoader.classList.remove('hidden');
-            generateProjectBtn.disabled = true;
-            projectResultContainer.classList.remove('hidden');
-            projectOutput.innerHTML = '';
-            downloadBtnContainer.classList.add('hidden');
-            
-            const projectData = {
-                teacherName: document.getElementById('teacherName').value,
-                schoolName: document.getElementById('schoolName').value,
-                level: levelSelect.value,
-                grade: gradeSelect.value,
-                location: locationInput.value,
-                areas: getSelectedAreas().join(', '),
-                problem: document.querySelector('input[name="problem"]:checked').value
-            };
-
-            try {
-                // *** RUTA CORREGIDA ***
-                const response = await fetch('/api/generate-project', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(projectData)
-                });
-                
-                if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.error || 'Error en el servidor al generar el proyecto');
-                }
-                
-                const data = await response.json();
-
-                if (data.projectHtml) {
-                    projectOutput.innerHTML = data.projectHtml;
-                    downloadBtnContainer.classList.remove('hidden');
-                    projectResultContainer.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    showError("La respuesta del servidor no contenía un proyecto. Intenta de nuevo.");
-                }
-
-            } catch (error) {
-                 console.error("Error al generar el proyecto:", error);
-                 showError(`No se pudo generar el proyecto. ${error.message}`);
-            } finally {
-                projectLoader.classList.add('hidden');
-                generateProjectBtn.disabled = false;
-            }
-        }
-        
-        function downloadAsWord() {
-            const projectOutput = document.getElementById('projectOutput');
-            const contentClone = projectOutput.cloneNode(true);
-            const originalElements = projectOutput.querySelectorAll('*');
-            const clonedElements = contentClone.querySelectorAll('*');
-
-            clonedElements.forEach((clonedEl, index) => {
-                const originalEl = originalElements[index];
-                if (originalEl) {
-                    const computedStyle = window.getComputedStyle(originalEl);
-                    clonedEl.style.cssText = computedStyle.cssText;
-                }
-            });
-            
-            const header = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                <meta charset='UTF-8'>
-                <style>
-                    body { font-family: 'Arial', sans-serif; font-size: 11pt; }
-                    table { border-collapse: collapse; width: 100%; }
-                    th, td { border: 1px solid #cccccc; padding: 8px; }
-                </style>
-                </head>
-                <body>
-            `;
-            const footer = "</body></html>";
-            const sourceHTML = header + contentClone.innerHTML + footer;
-            
-            const fileBlob = htmlDocx.asBlob(sourceHTML);
-            
-            const downloadLink = document.createElement("a");
-            downloadLink.href = URL.createObjectURL(fileBlob);
-            const safeFileName = document.getElementById('schoolName').value.replace(/[^a-z0-9]/gi, '_').toLowerCase();
-            downloadLink.download = `Proyecto_${safeFileName || 'export'}.docx`;
-            document.body.appendChild(downloadLink);
-            downloadLink.click();
-            document.body.removeChild(downloadLink);
-        }
-
-        // --- INICIAR APP ---
-        document.addEventListener('DOMContentLoaded', initialize);
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>

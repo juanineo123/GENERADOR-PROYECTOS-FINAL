@@ -9,6 +9,8 @@
   "author": "Juan Manuel Caicedo Oliva & Gemini",
   "license": "ISC",
   "dependencies": {
+    "docx": "^9.5.1",
+    "html-to-docx": "^1.8.0",
     "node-fetch": "^2.7.0"
   }
 }

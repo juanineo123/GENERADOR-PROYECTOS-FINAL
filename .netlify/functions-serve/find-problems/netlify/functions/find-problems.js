@@ -3017,7 +3017,7 @@ exports.handler = async (event, context) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
-      body: JSON.stringify({ error: "Method Not Allowed" })
+      body: JSON.stringify({ error: "M\xE9todo no permitido. Solo se acepta POST." })
     };
   }
   const apiKey = process.env.GEMINI_API_KEY;
@@ -3028,18 +3028,35 @@ exports.handler = async (event, context) => {
     };
   }
   try {
-    const { location } = JSON.parse(event.body);
-    if (!location) {
+    const { localidad, level, grade } = JSON.parse(event.body);
+    if (!localidad || !level || !grade) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: "La ubicaci\xF3n es requerida." })
+        body: JSON.stringify({ error: "Faltan datos (localidad, nivel o grado) para buscar problemas." })
       };
     }
-    const prompt = `Identifica 5 problemas o desaf\xEDos clave en la localidad de "${location}" que sean adecuados para ser abordados en un proyecto de aprendizaje escolar. Enf\xF3cate en temas que puedan ser investigados y sobre los cuales los estudiantes puedan proponer soluciones. Prioriza problemas relacionados con: medio ambiente (contaminaci\xF3n, reciclaje), salud (nutrici\xF3n, prevenci\xF3n), convivencia y ciudadan\xEDa (valoraci\xF3n del patrimonio cultural). Formula cada problema como un desaf\xEDo claro. No agregues introducciones, solo la lista numerada.`;
+    const prompt = `
+            Act\xFAa como un experto en problemas educativos y sociales de Per\xFA.
+            Genera una lista de 5 (cinco) problemas significativos y reales que podr\xEDan afectar a estudiantes de ${grade} de ${level} en la localidad de ${localidad}, Per\xFA.
+            Cada problema debe ser extremadamente conciso, de **una sola oraci\xF3n** y no m\xE1s de 15-20 palabras.
+            Formatea tu respuesta como una lista numerada, sin ning\xFAn texto adicional antes o despu\xE9s de la lista.
+            Ejemplo de formato:
+            1. Problema de ejemplo muy conciso aqu\xED.
+            2. Otro problema breve y al punto.
+            3. Tercer problema, directo.
+            4. Cuarto problema, sin rodeos.
+            5. Quinto problema.
+        `;
     const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
     const payload = {
       contents: [{ role: "user", parts: [{ text: prompt }] }],
-      generationConfig: { temperature: 0.7, topP: 1, topK: 1 }
+      generationConfig: {
+        temperature: 0.7,
+        topP: 1,
+        topK: 1,
+        maxOutputTokens: 300
+        // Reducido para forzar concisión
+      }
     };
     const geminiResponse = await fetch(apiUrl, {
       method: "POST",
@@ -3048,23 +3065,23 @@ exports.handler = async (event, context) => {
     });
     if (!geminiResponse.ok) {
       const errorBody = await geminiResponse.text();
-      console.error("Error desde la API de Gemini:", errorBody);
-      throw new Error("La API de Gemini devolvi\xF3 un error.");
+      console.error("Error desde la API de Gemini (find-problems):", errorBody);
+      throw new Error("La API de Gemini devolvi\xF3 un error al buscar problemas: " + errorBody);
     }
     const geminiData = await geminiResponse.json();
     const responseText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || "";
-    const problemMatches = responseText.match(/^\d+\.\s(.+)/gm);
-    const problems = problemMatches ? problemMatches.map((p) => p.replace(/^\d+\.\s/, "").trim().replace(/\*\*/g, "")) : [];
+    const problems = responseText.split("\n").map((line) => line.trim()).filter((line) => line.match(/^\d+\.\s/)).map((line) => line.replace(/^\d+\.\s/, "").trim());
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ problems })
+      body: JSON.stringify({ problems: problems.slice(0, 5) })
+      // Aseguramos un máximo de 5
     };
   } catch (error) {
     console.error("Error en la funci\xF3n find-problems:", error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: "Ocurri\xF3 un error interno al procesar la solicitud." })
+      body: JSON.stringify({ error: "Ocurri\xF3 un error interno al buscar problemas: " + error.message })
     };
   }
 };
