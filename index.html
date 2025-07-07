@@ -4,6 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Proyectos de Aprendizaje - Wizard</title>
+    <!-- ===== INICIO DEL CÓDIGO GUARDIA DE SEGURIDAD ===== -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    (async () => {
+        // --- CONFIGURACIÓN ---
+        // 1. URL de tu página de login principal
+        const loginPageUrl = 'https://transcendent-cascaron-19905f.netlify.app/'; // ¡IMPORTANTE! Reemplaza esto con la URL real de tu suite.
+
+        // 2. Claves de tu proyecto de Supabase (las mismas que en tu suite principal)
+        const SUPABASE_URL = 'https://gswvzdgogalahbcfxdbi.supabase.co'; 
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imdzd3Z6ZGdvZ2FsYWhiY2Z4ZGJpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA3MjAwNzUsImV4cCI6MjA2NjI5NjA3NX0.3ieGReiMIQwfozDVtJyjIlpPJre1coeJtddqD3HJN-4'; 
+        
+        // --- LÓGICA DE VERIFICACIÓN (No tocar) ---
+        try {
+            const { createClient } = supabase;
+            const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+            const { data: { session } } = await _supabase.auth.getSession();
+
+            if (!session) {
+                // Si NO hay sesión, redirige al login.
+                window.location.replace(loginPageUrl);
+            }
+            // Si hay sesión, no hace nada y permite que la página se cargue.
+            
+        } catch (error) {
+            console.error('Error en la verificación de sesión:', error);
+            // En caso de error, por seguridad, redirige al login.
+            window.location.replace(loginPageUrl);
+        }
+    })();
+</script>
+<!-- ===== FIN DEL CÓDIGO GUARDIA DE SEGURIDAD ===== -->
+
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
