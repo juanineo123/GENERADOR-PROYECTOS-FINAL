@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Proyectos de Aprendizaje - Wizard</title>
     <!-- ===== INICIO DEL CÓDIGO GUARDIA DE SEGURIDAD FINAL (Compatible con Netlify) ===== -->
-<script type="module">
-    // 1. IMPORTACIONES (Siempre al principio)
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+    <script type="module">
+        // 1. IMPORTACIONES (Siempre al principio)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
 
-    // 2. LÓGICA DEL GUARDIA
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Si la "llave" de la Suite (`?autorizado=true`) NO está, el guardia actúa.
-    if (urlParams.get('autorizado') !== 'true') {
-        
-        // La configuración de Firebase. Es necesaria para que funcione en Netlify.
-        // La seguridad real está en los "Dominios Autorizados" de la consola de Firebase.
-        const firebaseConfig = {
-            apiKey: "AIzaSyC-Og-9Ju4aWSbmwa6b4OpoHzjPzd073VI",
-            authDomain: "auth.caicedoeduca.com",
-            projectId: "delta-cortex-437020-h5",
-            storageBucket: "delta-cortex-437020-h5.appspot.com",
-            messagingSenderId: "423600255022",
-            appId: "1:423600255022:web:210337d8730803c500afbf",
-            measurementId: "G-2KJ74JH382"
-        };
+        // 2. LÓGICA DEL GUARDIA
+        const urlParams = new URLSearchParams(window.location.search);
 
-        const suiteLoginPageUrl = 'https://www.caicedoeduca.com/';
+        // Si la "llave" de la Suite (`?autorizado=true`) NO está, el guardia actúa.
+        if (urlParams.get('autorizado') !== 'true') {
 
-        try {
-            const app = initializeApp(firebaseConfig);
-            const auth = getAuth(app);
+            // La configuración de Firebase. Es necesaria para que funcione en Netlify.
+            // La seguridad real está en los "Dominios Autorizados" de la consola de Firebase.
+            // ESTA ES LA CONFIGURACIÓN CORRECTA Y UNIFICADA
+            const firebaseConfig = {
+                apiKey: "AIzaSyD_SCyO4s-fZZS2qBTKEqAFiWP3IPD97Uo",
+                authDomain: "plataforma-escala.firebaseapp.com",
+                projectId: "plataforma-escala",
+                storageBucket: "plataforma-escala.firebasestorage.app",
+                messagingSenderId: "917193676993",
+                appId: "1:917193676993:web:da3a51e59246bd917c1c40"
+            };
 
-            onAuthStateChanged(auth, (user) => {
-                if (!user) {
-                    // Si no hay sesión de usuario, redirige a la suite.
-                    console.log("GUARDIA: Acceso no autorizado. Redirigiendo a la suite...");
-                    window.top.location.href = suiteLoginPageUrl;
-                } else {
-                    console.log("GUARDIA: Usuario autenticado. Acceso permitido.");
-                }
-            });
-        } catch (error) {
-            console.error("GUARDIA: Error crítico.", error);
-            window.top.location.href = suiteLoginPageUrl;
+            const suiteLoginPageUrl = 'https://www.caicedoeduca.com/';
+
+            try {
+                const app = initializeApp(firebaseConfig);
+                const auth = getAuth(app);
+
+                onAuthStateChanged(auth, (user) => {
+                    if (!user) {
+                        // Si no hay sesión de usuario, redirige a la suite.
+                        console.log("GUARDIA: Acceso no autorizado. Redirigiendo a la suite...");
+                        window.top.location.href = suiteLoginPageUrl;
+                    } else {
+                        console.log("GUARDIA: Usuario autenticado. Acceso permitido.");
+                    }
+                });
+            } catch (error) {
+                console.error("GUARDIA: Error crítico.", error);
+                window.top.location.href = suiteLoginPageUrl;
+            }
+        } else {
+            // Si la llave de la Suite está presente, el guardia no hace nada.
+            console.log("GUARDIA: Acceso autorizado por la Suite. El guardia no actuará.");
         }
-    } else {
-        // Si la llave de la Suite está presente, el guardia no hace nada.
-        console.log("GUARDIA: Acceso autorizado por la Suite. El guardia no actuará.");
-    }
-</script>
-<!-- ===== FIN DEL CÓDIGO GUARDIA DE SEGURIDAD FINAL (Compatible con Netlify) ===== -->
+    </script>
+    <!-- ===== FIN DEL CÓDIGO GUARDIA DE SEGURIDAD FINAL (Compatible con Netlify) ===== -->
 
 
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1>Generador de Proyectos de Aprendizaje</h1>
@@ -101,9 +103,12 @@
                     <label><input type="checkbox" name="area" value="Comunicación"> Comunicación</label>
                     <label><input type="checkbox" name="area" value="Ciencia y Tecnología"> Ciencia y Tecnología</label>
                     <label><input type="checkbox" name="area" value="Ciencias Sociales"> Ciencias Sociales</label>
-                    <label><input type="checkbox" name="area" value="Desarrollo Personal, Ciudadanía y Cívica"> Desarrollo Personal, Ciudadanía y Cívica</label>
-                    <label><input type="checkbox" name="area" value="Educación para el Trabajo"> Educación para el Trabajo</label>
-                    <label><input type="checkbox" name="area" value="Educación Artística y Cultural"> Educación Artística y Cultural</label>
+                    <label><input type="checkbox" name="area" value="Desarrollo Personal, Ciudadanía y Cívica">
+                        Desarrollo Personal, Ciudadanía y Cívica</label>
+                    <label><input type="checkbox" name="area" value="Educación para el Trabajo"> Educación para el
+                        Trabajo</label>
+                    <label><input type="checkbox" name="area" value="Educación Artística y Cultural"> Educación
+                        Artística y Cultural</label>
                     <label><input type="checkbox" name="area" value="Educación Física"> Educación Física</label>
                     <label><input type="checkbox" name="area" value="Religión"> Religión</label>
                     <label><input type="checkbox" name="area" value="Inglés"> Inglés</label>
@@ -115,27 +120,30 @@
             <div class="step" id="step3" style="display:none;">
                 <h2>Paso 3: Situación Problemática</h2>
                 <p>Describe una situación o busca problemas relevantes para tu localidad.</p>
-                
+
                 <label for="problem">Describe la situación problemática (opcional, si no buscas):</label>
                 <textarea id="problem" name="problem" rows="4"></textarea>
 
                 <p>O bien, busca problemas basados en tu localidad:</p>
                 <label for="localidadProblem">Localidad (para buscar problemas):</label>
-                <input type="text" id="localidadProblem" name="localidadProblem" placeholder="Ej: Tarapoto" value="Tarapoto">
+                <input type="text" id="localidadProblem" name="localidadProblem" placeholder="Ej: Tarapoto"
+                    value="Tarapoto">
                 <button onclick="searchProblems()">Buscar Problemas en mi Localidad</button>
-                
-                <div id="problemsOutput" style="margin-top: 20px; padding: 15px; border: 1px dashed #ced4da; border-radius: 5px; min-height: 80px; display: none;">
+
+                <div id="problemsOutput"
+                    style="margin-top: 20px; padding: 15px; border: 1px dashed #ced4da; border-radius: 5px; min-height: 80px; display: none;">
                     <p>Cargando opciones de problemas...</p>
                     <div class="loading-spinner" style="display:none;"></div>
                     <div id="problemsList">
-                        </div>
-                    <button id="confirmProblemsBtn" onclick="nextStep()" style="margin-top: 15px; display:none;">Confirmar Problemas y Continuar</button>
+                    </div>
+                    <button id="confirmProblemsBtn" onclick="nextStep()"
+                        style="margin-top: 15px; display:none;">Confirmar Problemas y Continuar</button>
                 </div>
 
                 <div class="navigation-buttons-step3" style="margin-top: 20px;">
                     <button onclick="prevStep()">Anterior</button>
                     <button id="continueProblemStepBtn" onclick="nextStep()" disabled>Siguiente</button>
-                    </div>
+                </div>
             </div>
 
             <div class="step" id="step4" style="display:none;">
@@ -177,4 +185,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
