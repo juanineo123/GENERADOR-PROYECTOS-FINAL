@@ -45,7 +45,7 @@ exports.handler = async (event, context) => {
         `;
 
         // 5. Llamar a la API de Google Gemini
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/Gemini-2.5-Flash-Lite:generateContent?key=${apiKey}`;
         const payload = {
             contents: [{ role: 'user', parts: [{ text: prompt }] }],
             generationConfig: {
