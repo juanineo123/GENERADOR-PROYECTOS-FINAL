@@ -89,7 +89,7 @@ exports.handler = async (event, context) => {
         return { statusCode: 400, body: JSON.stringify({ error: 'Bloque de proyecto no reconocido.' }) };
     }
 
-    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/Gemini-2.5-Flash-Lite:generateContent?key=${apiKey}`;
+    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`;
     const payload = {
       contents: [{ role: 'user', parts: [{ text: prompt }] }],
       generationConfig: { temperature, topP: 1, topK: 1, maxOutputTokens },
