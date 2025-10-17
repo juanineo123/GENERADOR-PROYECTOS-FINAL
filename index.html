@@ -5,55 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generador de Proyectos de Aprendizaje - Wizard</title>
-    <!-- ===== INICIO DEL CÓDIGO GUARDIA DE SEGURIDAD FINAL (Compatible con Netlify) ===== -->
-    <script type="module">
-        // 1. IMPORTACIONES (Siempre al principio)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-        // 2. LÓGICA DEL GUARDIA
-        const urlParams = new URLSearchParams(window.location.search);
-
-        // Si la "llave" de la Suite (`?autorizado=true`) NO está, el guardia actúa.
-        if (urlParams.get('autorizado') !== 'true') {
-
-            // La configuración de Firebase. Es necesaria para que funcione en Netlify.
-            // La seguridad real está en los "Dominios Autorizados" de la consola de Firebase.
-            // ESTA ES LA CONFIGURACIÓN CORRECTA Y UNIFICADA
-            const firebaseConfig = {
-                apiKey: "AIzaSyD_SCyO4s-fZZS2qBTKEqAFiWP3IPD97Uo",
-                authDomain: "plataforma-escala.firebaseapp.com",
-                projectId: "plataforma-escala",
-                storageBucket: "plataforma-escala.firebasestorage.app",
-                messagingSenderId: "917193676993",
-                appId: "1:917193676993:web:da3a51e59246bd917c1c40"
-            };
-
-            const suiteLoginPageUrl = 'https://www.caicedoeduca.com/';
-
-            try {
-                const app = initializeApp(firebaseConfig);
-                const auth = getAuth(app);
-
-                onAuthStateChanged(auth, (user) => {
-                    if (!user) {
-                        // Si no hay sesión de usuario, redirige a la suite.
-                        console.log("GUARDIA: Acceso no autorizado. Redirigiendo a la suite...");
-                        window.top.location.href = suiteLoginPageUrl;
-                    } else {
-                        console.log("GUARDIA: Usuario autenticado. Acceso permitido.");
-                    }
-                });
-            } catch (error) {
-                console.error("GUARDIA: Error crítico.", error);
-                window.top.location.href = suiteLoginPageUrl;
-            }
-        } else {
-            // Si la llave de la Suite está presente, el guardia no hace nada.
-            console.log("GUARDIA: Acceso autorizado por la Suite. El guardia no actuará.");
-        }
-    </script>
-    <!-- ===== FIN DEL CÓDIGO GUARDIA DE SEGURIDAD FINAL (Compatible con Netlify) ===== -->
+    
 
 
     <link rel="stylesheet" href="style.css">
